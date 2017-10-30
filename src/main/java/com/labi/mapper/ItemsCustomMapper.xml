@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.labi.mapper.ItemsCustomMapper">
+	
+	<sql id="item_query">
+		<if test="itemsCustom != null">
+			<if test="itemsCustom.id != null and itemsCustom.id != ''">
+				and id = #{itemsCustom.id} 
+			</if> <!-- 注意这里 id = #{itemsCustom.id}不能写成id = #{id}，因为ItemsQueryVo中没有id这个属性 -->
+			<if test="itemsCustom.name != null and itemsCustom.name != ''">
+				and name like '%${itemsCustom.name}%'
+			</if>
+		</if>
+	</sql>
+	<sql id="sort_item">
+		<if test="isSort == 'true'">
+			order by id desc
+		</if>
+		<if test="isSort != 'true'">
+			order by id
+		</if>
+	</sql>
+	
+	<!-- ItemsCustomVo包装了查询条件 -->
+	<select id="getItemsList" parameterType="ItemsQueryVo" resultType="ItemsCustom">
+		select * from items
+		<where>
+			<include refid="item_query"/>
+		</where>
+		<include refid="sort_item"></include>
+	</select>	
+
+</mapper>
