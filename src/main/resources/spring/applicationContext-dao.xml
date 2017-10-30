@@ -33,4 +33,6 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
 	
+	<bean id="solrSearchDaoImpl" class="com.labi.solr.dao.impl.SolrSearchDaoImpl"></bean>
+	
 </beans>

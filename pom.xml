@@ -102,7 +102,11 @@
 	    <artifactId>spring-context-support</artifactId>
 	    <version>4.3.10.RELEASE</version>
 	</dependency>
-	
+	<dependency>
+	    <groupId>org.apache.solr</groupId>
+	    <artifactId>solr-solrj</artifactId>
+	    <version>6.6.2</version>
+	</dependency>
   </dependencies>
   
 </project>

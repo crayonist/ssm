@@ -25,7 +25,7 @@ public class ItemsController {
 	private ItemsIndexer itemsIndexer;
 	
 	@RequestMapping("/getItemsList")
-	public String getItemsList(ItemsQueryVo itemsQueryVo, Model model) {
+	public String getItemsList(ItemsQueryVo itemsQueryVo, Model model) throws Exception {
 		itemsQueryVo.setIsSort("false".equals(itemsQueryVo.getIsSort()) ? "true" : "false");
 		List<ItemsCustom> itemsList = itemsService.getItemsList(itemsQueryVo);
 		model.addAttribute("itemsList", itemsList);
@@ -34,7 +34,7 @@ public class ItemsController {
 	}
 	
 	/**
-	 * 创建索引
+	 * 创建索引(Lucene)
 	 * @throws Exception
 	 */
 	@RequestMapping("/addIndex")
@@ -44,13 +44,13 @@ public class ItemsController {
 	}
 	
 	/**
-	 * 全文检索
+	 * 全文检索(Lucene)
 	 * @param itemsQueryVo 查询条件
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/queryItems")
-	public String queryItems(ItemsQueryVo itemsQueryVo, Model model) {
+	@RequestMapping("/queryItemsByLucene")
+	public String queryItemsByLucene(ItemsQueryVo itemsQueryVo, Model model) {
 		String name = itemsQueryVo.getItemsCustom().getName();
 		if (!StringUtils.isEmpty(name)) {
 			List<ItemsCustom> itemsList;
@@ -61,6 +61,30 @@ public class ItemsController {
 				e.printStackTrace();
 			}
 		}
+		return "index";
+	}
+	
+	/**
+	 * 创建索引(Solr)
+	 * @throws Exception
+	 */
+	@RequestMapping("/addIndexFromSolr")
+	@ResponseBody
+	public void addIndexFromSolr() throws Exception {
+		itemsService.importItems();
+	}
+	
+	/**
+	 * 全文检索(Solr)
+	 * @param itemsQueryVo 查询条件
+	 * @param model
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping("/queryItemsBySolr")
+	public String queryItemsBySolr(ItemsQueryVo itemsQueryVo, Model model) throws Exception {
+		List<ItemsCustom> itemsList = itemsService.getItemsListBySolr(itemsQueryVo);
+		model.addAttribute("itemsList", itemsList);
 		return "index";
 	}
 	
