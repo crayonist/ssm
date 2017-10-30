@@ -1,7 +1,7 @@
 # ssm
 ## 1.spring+mybatis整合：
 ### 1.1 配置mybatis-config：
-主要配置全局设置settring和别名alias，不需要配置mapper所在的链接，因为在spring配置中可以配置进行扫描mapper，必须遵循mapper.xml和mapper.java在同个目录下
+   主要配置全局设置settring和别名alias，不需要配置mapper所在的链接，因为在spring配置中可以配置进行扫描mapper，必须遵循mapper.xml和mapper.java在同个目录下
 ### 1.2 spring.xml配置：spring主要是管理mapper、service、controller的注册，即交给IOC容器
 #### 1.2.1 applicationContext-dao.xml：
 * 配置加载db.properties；
